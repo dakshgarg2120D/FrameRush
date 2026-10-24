@@ -15,7 +15,16 @@ function checkOrigin(origin, cb) {
   cb(new Error("Origin not allowed by CORS: " + origin));
 }
 
+const path = require("path");
 const app = express();
+const clientDist = path.join(__dirname, "client", "dist");
+
+app.use(express.static(clientDist));
+
+app.get("/", (_req, res) => {
+  res.sendFile(path.join(clientDist, "index.html"));
+});
+
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 const server = http.createServer(app);

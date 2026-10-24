@@ -4,7 +4,7 @@ const http = require("http");
 const { Server } = require("socket.io");
 const { GameEngine } = require("./server/gameEngine");
 
-const PORT = Number(process.env.PORT) || 3001;
+const PORT = Number(process.env.PORT) || 8080;
 
 // Allowed browser origins: Vite dev server (localhost / LAN) plus anything in CLIENT_ORIGIN (comma-separated).
 const extraOrigins = (process.env.CLIENT_ORIGIN || "").split(",").map((s) => s.trim()).filter(Boolean);

@@ -14,14 +14,14 @@ const gameData = [
   {
     id: "monument_002",
     imageUrl: "/images/Monuments/Charminar.jpg",
-    acceptedAnswers: ["charminar", "char minar"],
+    acceptedAnswers: ["charminar", "char minar", "charmeenar", "Charminar"],
     category: "monuments",
     difficulty: "easy"
   },
   {
     id: "monument_003",
     imageUrl: "/images/Monuments/Fatehpur%20Sikri.jpg",
-    acceptedAnswers: ["fatehpur sikri"],
+    acceptedAnswers: ["fatehpur sikri", "fatehpur", "Fatehpur"],
     category: "monuments",
     difficulty: "medium"
   },
@@ -56,14 +56,14 @@ const gameData = [
   {
     id: "monument_008",
     imageUrl: "/images/Monuments/Mysore%20Palace.jpg",
-    acceptedAnswers: ["mysore palace", "amazing palace"],
+    acceptedAnswers: ["mysore palace", "mysore"],
     category: "monuments",
     difficulty: "easy"
   },
   {
     id: "monument_009",
     imageUrl: "/images/Monuments/Qutub%20Minar.jpg",
-    acceptedAnswers: ["qutub minar", "qutb minar"],
+    acceptedAnswers: ["qutub minar", "qutb minar", "qutub meenar"],
     category: "monuments",
     difficulty: "easy"
   },
@@ -133,7 +133,7 @@ const gameData = [
   {
     id: "monument_01307",
     imageUrl: "/images/character/carryminati.jpeg",
-    acceptedAnswers: ["carryminati", "carry minati", "carry", "ajey nagar"],
+    acceptedAnswers: ["carryminati", "carry minati", "carry", "ajey nagar", "ajay nagar"],
     category: "character",
     difficulty: "medium"
   },

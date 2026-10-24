@@ -12,12 +12,12 @@ const IMAGES = Array.isArray(rawData)
 const num = (v, d) => (Number.isFinite(Number(v)) && Number(v) > 0 ? Number(v) : d);
 
 const CONFIG = {
-  totalRounds: num(process.env.TOTAL_ROUNDS, 5),
+  totalRounds: num(process.env.TOTAL_ROUNDS, 10),
   roundDurationMs: num(process.env.ROUND_DURATION_MS, 15000),
   betweenRoundsMs: num(process.env.BETWEEN_ROUNDS_MS, 4000),
   lobbyWaitMs: num(process.env.LOBBY_WAIT_MS, 3000), // extra wait for 3rd/4th player once 2 are queued
   minPlayers: 2,
-  maxPlayers: 4,
+  maxPlayers: 6,
   startRevealPercent: 10,
   tickMs: 1000,
   waitingBroadcastMs: 3000,

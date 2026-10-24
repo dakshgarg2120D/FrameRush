@@ -19,7 +19,7 @@ function isCorrect(guess, item) {
 }
 
 // Pick n unique images (Fisher-Yates shuffle). Fewer than n if the dataset is small.
-function pickRounds(n = 5) {
+function pickRounds(n = 10) {
   const pool = [...gameData];
   for (let i = pool.length - 1; i > 0; i--) {
     const j = Math.floor(Math.random() * (i + 1));

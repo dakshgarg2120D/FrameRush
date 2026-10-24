@@ -12,7 +12,7 @@ const svg = encodeURIComponent(
 export const mockGame = {
   roomId: 'mock_room',
   roundNumber: 2,
-  totalRounds: 5,
+  totalRounds: 10,
   imageUrl: `data:image/svg+xml,${svg}`,
   revealedPercent: 45,
   timeLeft: 8,

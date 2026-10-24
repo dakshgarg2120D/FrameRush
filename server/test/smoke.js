@@ -35,7 +35,7 @@ function makePlayer(name) {
 async function main() {
   const server = spawn(process.execPath, ["index.js"], {
     cwd: path.join(__dirname, ".."),
-    env: { ...process.env, PORT, ROUND_DURATION_MS: ROUND_MS, BETWEEN_ROUNDS_MS: 300, LOBBY_WAIT_MS: 300, TOTAL_ROUNDS: 5 },
+    env: { ...process.env, PORT, ROUND_DURATION_MS: ROUND_MS, BETWEEN_ROUNDS_MS: 300, LOBBY_WAIT_MS: 300, TOTAL_ROUNDS: 10 },
   });
   server.stdout.on("data", () => {}); server.stderr.on("data", (d) => process.stderr.write("[server] " + d));
   await sleep(800);
@@ -72,15 +72,15 @@ async function main() {
   check(!!B.of("game:finished").length, "both players received game:finished");
   const started = A.of("game:started")[0], startedB = B.of("game:started")[0];
   check(started && started.roomId === startedB.roomId, "both players in same room");
-  check(started.players.length === 2 && started.totalRounds === 5, "2 players, 5 total rounds");
+  check(started.players.length === 2 && started.totalRounds === 10, "2 players, 10 total rounds");
 
   const roundsA = A.of("game:round-ended"), roundsB = B.of("game:round-ended");
-  check(roundsA.length === 5 && roundsB.length === 5, "5 rounds ended for both players");
+  check(roundsA.length === 10 && roundsB.length === 10, "10 rounds ended for both players");
   check(roundsA.every((r, i) => r.correctAnswer === roundsB[i].correctAnswer && r.roundNumber === i + 1), "both saw the same answers in the same order");
 
   const imgs = (P) => [...new Set(P.events.filter((e) => e.ev === "game:state" || e.ev === "game:started").map((e) => e.d.roundNumber + ":" + e.d.imageUrl))];
   check(JSON.stringify(imgs(A)) === JSON.stringify(imgs(B)), "both saw identical image per round");
-  check(new Set(imgs(A).map((s) => s.split(":")[1])).size === 5, "5 distinct images used");
+  check(new Set(imgs(A).map((s) => s.split(":")[1])).size === 10, "10 distinct images used");
 
   // No answer leakage during play
   const live = [...A.of("game:started"), ...A.of("game:state")];

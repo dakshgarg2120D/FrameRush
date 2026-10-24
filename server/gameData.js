@@ -174,7 +174,7 @@ const gameData = [
   },
   {
     id: "monument_01313",
-    imageUrl: "/images/character/dwyane%20johnson.jpeg",
+    imageUrl: "/images/character/dwayne%20johnson.jpeg",
     acceptedAnswers: ["dwayne johnson", "the rock", "rock"],
     category: "character",
     difficulty: "easy"

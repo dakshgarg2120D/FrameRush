@@ -78,7 +78,7 @@ export default function GameScreen({ game, roundResult, myId, playerName, connec
 
   // Image clarity comes straight from the server's revealedPercent.
   const pct = roundOver ? 100 : Math.max(0, Math.min(100, Number(revealedPercent) || 0));
-  const blur = ((100 - pct) / 100) * 30;
+  const blur = ((100 - pct) / 100) * 20; // 20px blur at 0% clarity, 0px at 100%.
   const ranked = rank(players);
   const answer = roundResult?.correctAnswer ?? roundResult?.answer;
   const urgent = hasTime && timeLeft <= 5 && !roundOver;

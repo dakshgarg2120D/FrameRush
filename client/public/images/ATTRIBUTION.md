@@ -19,4 +19,4 @@ Fill one row per image. Only use public domain / CC0 / CC-BY (with credit) / Uns
 | landmark-04.jpg | Big Ben | | | | |
 
 Tips: roughly 1000-1600 px wide, JPEG, under 300 KB. Choose a centred, uncluttered main subject.
-Delete this "Subject" column before any public release if you do not want the mapping public.   
+Delete this "Subject" column before any public release if you do not want the mapping public.   .

@@ -210,7 +210,7 @@ const gameData = [
   {
     id: "monument_01318",
     imageUrl: "/images/character/kk%20pant.jpeg",
-    acceptedAnswers: ["rishabh pant", "rishabh", "pant", "kk pant"],
+    acceptedAnswers: ["kk pant"],
     category: "character",
     difficulty: "medium"
   },
@@ -329,7 +329,7 @@ const gameData = [
   {
     id: "monument_01335",
     imageUrl: "/images/character/sydney%20sweeney.jpeg",
-    acceptedAnswers: ["sydney sweeney"],
+    acceptedAnswers: ["sydney sweeney" , "sydney"],
     category: "character",
     difficulty: "easy"
   },

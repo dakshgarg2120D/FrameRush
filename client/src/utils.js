@@ -3,7 +3,7 @@
 // The exact "has guessed correctly" field name is not final yet (confirm with Bhavya).
 // We accept a few likely names so a rename on the server only needs a change here.
 export const isCorrect = (p) =>
-  Boolean(p?.hasGuessed ?? p?.guessedCorrectly ?? p?.correct ?? p?.guessed ?? false);
+  Boolean(p?.hasGuessedCorrectly ?? p?.hasGuessed ?? p?.guessedCorrectly ?? p?.correct ?? p?.guessed ?? false);
 
 export const roundPoints = (p) => p?.roundScore ?? p?.pointsEarned ?? p?.roundPoints ?? null;
 

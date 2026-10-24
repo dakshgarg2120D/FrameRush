@@ -25,6 +25,8 @@ export default function App() {
   const pendingName = useRef(null);
   const gameRef = useRef(null);
   gameRef.current = game;
+  const screenRef = useRef(screen);
+  screenRef.current = screen;
 
   useEffect(() => {
     if (MOCK) return undefined;
@@ -37,7 +39,20 @@ export default function App() {
         pendingName.current = null;
       }
     };
-    const onDisconnect = () => setConnection('lost');
+    const onDisconnect = (reason) => {
+      if (reason === 'io client disconnect') return; // we left on purpose
+      if (screenRef.current === 'game') {
+        // The server cannot resume a match after a reconnect (new socket id), so end it cleanly.
+        pendingName.current = null;
+        socket.disconnect();
+        setGame(null);
+        setRoundResult(null);
+        setFinal(null);
+        setError('Connection lost, so the match ended. Press Play Now to start a new one.');
+        setScreen('landing');
+      }
+      setConnection('lost');
+    };
     const onConnectError = () => setConnection('error');
 
     const onWaiting = () => setScreen((s) => (s === 'game' || s === 'results' ? s : 'searching'));
@@ -60,9 +75,22 @@ export default function App() {
 
     const onRoundEnded = (data) => {
       setRoundResult({ ...data, roundNumber: data?.roundNumber ?? gameRef.current?.roundNumber });
-      if (Array.isArray(data?.players)) {
-        setGame((prev) => ({ ...(prev || {}), players: data.players }));
-      }
+      // Merge final totals for the round into the scoreboard, keeping each player's correct flag.
+      setGame((prev) => {
+        const old = prev?.players || [];
+        const list = Array.isArray(data?.players) ? data.players : old;
+        const players = list.map((p) => {
+          const rs = data?.roundScores?.find((r) => r.id === p.id);
+          const before = old.find((o) => o.id === p.id);
+          return {
+            ...before,
+            ...p,
+            hasGuessedCorrectly: rs ? rs.correct : before?.hasGuessedCorrectly,
+            roundPoints: rs ? rs.points : undefined,
+          };
+        });
+        return { ...(prev || {}), players };
+      });
     };
 
     const onFinished = (data) => {
@@ -161,6 +189,8 @@ export default function App() {
       {screen === 'results' && (
         <ResultsScreen
           players={final?.players || game?.players || []}
+          winners={final?.winners}
+          reason={final?.reason}
           myId={myId}
           playerName={playerName}
           onPlayAgain={() => startSearch(playerName)}

@@ -41,8 +41,23 @@ export default function GameScreen({ game, roundResult, myId, playerName, connec
 
   // Server confirmed my guess was correct.
   useEffect(() => {
-    if (iGuessed) setFeedback({ type: 'ok', text: 'Correct!' });
+    if (iGuessed) setFeedback((f) => (f?.type === 'ok' ? f : { type: 'ok', text: 'Correct!' }));
   }, [iGuessed]);
+
+  // The server answers every guess with `game:guess-result`.
+  useEffect(() => {
+    const onResult = (r) => {
+      if (r?.correct) {
+        setFeedback({ type: 'ok', text: r.pointsAwarded ? `Correct! +${r.pointsAwarded}` : 'Correct!' });
+      } else if (r?.ignored) {
+        if (r.reason === 'round-over') setFeedback({ type: 'info', text: 'Round over.' });
+      } else {
+        setFeedback({ type: 'bad', text: 'Not quite!' });
+      }
+    };
+    socket.on('game:guess-result', onResult);
+    return () => socket.off('game:guess-result', onResult);
+  }, []);
 
   // Round finished.
   useEffect(() => {
@@ -57,18 +72,7 @@ export default function GameScreen({ game, roundResult, myId, playerName, connec
     if (!guess || locked) return;
     setText('');
 
-    // Result comes from the server. If the server answers with an acknowledgement
-    // ({ correct: boolean }) we use it; otherwise we read my status from the next state update.
-    let settled = false;
-    const settle = (ok) => {
-      if (settled) return;
-      settled = true;
-      setFeedback(ok ? { type: 'ok', text: 'Correct!' } : { type: 'bad', text: 'Not quite!' });
-    };
-    socket.emit('game:guess', { guess }, (res) => {
-      if (res && typeof res.correct === 'boolean') settle(res.correct);
-    });
-    setTimeout(() => settle(isCorrect(meRef.current)), 800);
+    socket.emit('game:guess', { guess });
     inputRef.current?.focus();
   };
 
@@ -168,7 +172,7 @@ export default function GameScreen({ game, roundResult, myId, playerName, connec
               return (
                 <li key={p.id ?? p.name} className={`${mine ? 'me' : ''} ${isCorrect(p) ? 'got-it' : ''}`}>
                   <span className="rank">{p.rank}</span>
-                  <span className="pname">{p.name}{mine ? ' (you)' : ''}</span>
+                  <span className="pname">{p.name}{mine ? ' (you)' : ''}{p.connected === false ? ' (left)' : ''}</span>
                   {isCorrect(p) && <span className="check" title="Guessed correctly">✓</span>}
                   <span className="score">
                     {p.score ?? 0}

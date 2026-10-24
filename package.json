@@ -1,13 +1,14 @@
 {
-"name": "framerush",
-"version": "1.0.0",
-"private": true,
-"main": "index.js",
-"scripts": {
-"start": "node index.js"
-},
-"dependencies": {
-"express": "^4.19.2",
-"socket.io": "^4.7.5"
-}
+  "name": "framerush",
+  "version": "1.0.0",
+  "private": true,
+  "main": "index.js",
+  "scripts": {
+    "build": "npm --prefix client install && npm --prefix client run build",
+    "start": "npm run build && node index.js"
+  },
+  "dependencies": {
+    "express": "^4.19.2",
+    "socket.io": "^4.7.5"
+  }
 }

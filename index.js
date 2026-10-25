@@ -28,7 +28,12 @@ app.get("/", (_req, res) => {
 app.get("/health", (_req, res) => res.json({ ok: true }));
 
 const server = http.createServer(app);
-const io = new Server(server, { cors: { origin: checkOrigin, methods: ["GET", "POST"] } });
+const io = new Server(server, {
+  cors: {
+    origin: true,
+    methods: ["GET", "POST"]
+  }
+});
 const engine = new GameEngine(io);
 
 function safe(socket, fn) {
